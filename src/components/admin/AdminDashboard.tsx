@@ -1,22 +1,63 @@
 import React from 'react';
-import type { RoleRequirement, SkillLevel } from '../../types';
-import { MOCK_PERSONAS, MOCK_PROFILES } from '../../data/mockData';
+import type { RoleRequirement, SkillLevel, UserPersona } from '../../types';
+import { MOCK_PROFILES } from '../../data/mockData';
 
 import { MOSPI_SKILLS } from '../../data/taxonomy';
 import { computeSkillGaps, computeOverallReadiness } from '../../services/gapAnalysisEngine';
-import { Users, BarChart2, Shield, Sliders, TrendingUp, Search, Save, CheckCircle2 } from 'lucide-react';
+import { Users, BarChart2, Shield, Sliders, TrendingUp, Search, Save, CheckCircle2, UserPlus, X } from 'lucide-react';
 
 interface AdminDashboardProps {
   roles: RoleRequirement[];
   onUpdateRoleRequirement: (updatedRole: RoleRequirement) => void;
+  personas: UserPersona[];
+  onAddEmployee: (newPersona: UserPersona) => void;
 }
 
-export const AdminDashboard: React.FC<AdminDashboardProps> = ({ roles, onUpdateRoleRequirement }) => {
+export const AdminDashboard: React.FC<AdminDashboardProps> = ({
+  roles,
+  onUpdateRoleRequirement,
+  personas,
+  onAddEmployee
+}) => {
   const [activeAdminTab, setActiveAdminTab] = React.useState<'heatmap' | 'roles' | 'employees'>('heatmap');
   const [selectedRoleId, setSelectedRoleId] = React.useState<string>(roles[0].id);
   const [editingRole, setEditingRole] = React.useState<RoleRequirement>(roles[0]);
   const [saveSuccessMsg, setSaveSuccessMsg] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
+
+  // Add Employee Form State
+  const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = React.useState(false);
+  const [empName, setEmpName] = React.useState('');
+  const [empEmail, setEmpEmail] = React.useState('');
+  const [empDesignation, setEmpDesignation] = React.useState('Junior Statistical Officer (JSO)');
+  const [empDepartment, setEmpDepartment] = React.useState('Field Operations Division (FOD)');
+  const [empRoleId, setEmpRoleId] = React.useState(roles[0]?.id || 'role_jso');
+  const [empAvatarUrl, setEmpAvatarUrl] = React.useState('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80');
+  const [addEmpSuccessMsg, setAddEmpSuccessMsg] = React.useState(false);
+
+  const handleCreateEmployeeSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!empName.trim() || !empEmail.trim()) return;
+
+    const newEmp: UserPersona = {
+      id: `usr_${Date.now()}`,
+      name: empName.trim(),
+      email: empEmail.trim(),
+      userRole: 'employee',
+      designation: empDesignation,
+      department: empDepartment,
+      avatarUrl: empAvatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      roleId: empRoleId,
+      joinedDate: new Date().toISOString().split('T')[0]
+    };
+
+    onAddEmployee(newEmp);
+    setIsAddEmployeeModalOpen(false);
+    setAddEmpSuccessMsg(true);
+    setEmpName('');
+    setEmpEmail('');
+    setTimeout(() => setAddEmpSuccessMsg(false), 4000);
+  };
 
   React.useEffect(() => {
     const found = roles.find(r => r.id === selectedRoleId);
@@ -273,24 +314,42 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ roles, onUpdateR
       {activeAdminTab === 'employees' && (
         /* Officer Directory */
         <div className="eng-card p-6 lg:p-8 space-y-4">
-          <div className="flex items-center justify-between">
+          
+          {addEmpSuccessMsg && (
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 text-xs text-emerald-500 font-bold flex items-center gap-2 animate-pulse">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              New officer registered successfully! Profile & baseline skill gap matrix initialized.
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h2 className="font-bold text-base flex items-center gap-2">
                 <Users className="w-4 h-4 text-indigo-500" />
                 MoSPI Officer Competency Directory
               </h2>
-              <p className="text-xs opacity-70 font-medium">Search officers and inspect individual role readiness</p>
+              <p className="text-xs opacity-70 font-medium">Search officers, add new personnel, and inspect individual role readiness</p>
             </div>
 
-            <div className="relative">
-              <Search className="w-4 h-4 opacity-50 absolute left-3.5 top-2.5" />
-              <input
-                type="text"
-                placeholder="Search officer or department..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="eng-input rounded-xl pl-9 pr-4 py-2 text-xs font-medium"
-              />
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="relative flex-1 sm:flex-initial">
+                <Search className="w-4 h-4 opacity-50 absolute left-3.5 top-2.5" />
+                <input
+                  type="text"
+                  placeholder="Search officer or department..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="eng-input rounded-xl pl-9 pr-4 py-2 text-xs font-medium w-full"
+                />
+              </div>
+
+              <button
+                onClick={() => setIsAddEmployeeModalOpen(true)}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap"
+              >
+                <UserPlus className="w-4 h-4" />
+                Add New Officer
+              </button>
             </div>
           </div>
 
@@ -306,35 +365,170 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ roles, onUpdateR
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                {MOCK_PERSONAS.filter(p => p.userRole === 'employee').map(persona => {
-                  const role = roles.find(r => r.id === persona.roleId) || roles[0];
-                  const profile = MOCK_PROFILES[persona.id] || MOCK_PROFILES['usr_rajesh'];
-                  const gaps = computeSkillGaps(profile, role);
-                  const readiness = computeOverallReadiness(gaps);
+                {personas
+                  .filter(p => p.userRole === 'employee' && (
+                    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    p.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    p.designation.toLowerCase().includes(searchTerm.toLowerCase())
+                  ))
+                  .map(persona => {
+                    const role = roles.find(r => r.id === persona.roleId) || roles[0];
+                    const profile = MOCK_PROFILES[persona.id] || {
+                      userId: persona.id,
+                      roleId: persona.roleId,
+                      scores: {}
+                    };
+                    const gaps = computeSkillGaps(profile, role);
+                    const readiness = computeOverallReadiness(gaps);
 
-                  return (
-                    <tr key={persona.id} className="hover:bg-slate-500/5 transition-colors">
-                      <td className="py-3 px-3 font-bold flex items-center gap-2.5">
-                        <img src={persona.avatarUrl} alt={persona.name} className="w-7 h-7 rounded-full object-cover border border-indigo-500/40" />
-                        <span>{persona.name}</span>
-                      </td>
-                      <td className="py-3 px-3 font-medium">{persona.designation}</td>
-                      <td className="py-3 px-3 opacity-80 font-medium">{persona.department}</td>
-                      <td className="py-3 px-3">
-                        <span className="px-2.5 py-0.5 rounded font-mono text-[11px] font-semibold bg-indigo-500/10 text-indigo-500">
-                          {role.title}
-                        </span>
-                      </td>
-                      <td className="py-3 px-3 text-center">
-                        <span className="font-mono font-bold text-emerald-500 bg-emerald-500/10 px-3 py-0.5 rounded border border-emerald-500/30">
-                          {readiness}% Match
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
+                    return (
+                      <tr key={persona.id} className="hover:bg-slate-500/5 transition-colors">
+                        <td className="py-3 px-3 font-bold flex items-center gap-2.5">
+                          <img src={persona.avatarUrl} alt={persona.name} className="w-7 h-7 rounded-full object-cover border border-indigo-500/40" />
+                          <div>
+                            <span>{persona.name}</span>
+                            <span className="block text-[10px] opacity-60 font-mono font-normal">{persona.email}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-3 font-medium">{persona.designation}</td>
+                        <td className="py-3 px-3 opacity-80 font-medium">{persona.department}</td>
+                        <td className="py-3 px-3">
+                          <span className="px-2.5 py-0.5 rounded font-mono text-[11px] font-semibold bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
+                            {role.title}
+                          </span>
+                        </td>
+                        <td className="py-3 px-3 text-center">
+                          <span className="font-mono font-bold text-emerald-500 bg-emerald-500/10 px-3 py-0.5 rounded border border-emerald-500/30">
+                            {readiness}% Match
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* Add New Officer Modal */}
+      {isAddEmployeeModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+          <div className="eng-card max-w-lg w-full p-6 sm:p-8 space-y-6 relative border border-indigo-500/30 shadow-2xl">
+            <button
+              onClick={() => setIsAddEmployeeModalOpen(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-lg opacity-70 hover:opacity-100 eng-card cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+                <UserPlus className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold text-base">Add New MoSPI Officer</h3>
+                <p className="text-xs opacity-70">Register a new statistical officer to the competency intelligence database</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleCreateEmployeeSubmit} className="space-y-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold block opacity-90">Full Name *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Dr. Sunita Sharma"
+                  value={empName}
+                  onChange={(e) => setEmpName(e.target.value)}
+                  className="eng-input w-full px-3 py-2 rounded-xl text-xs font-medium"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold block opacity-90">Official Email ID *</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="e.g. sunita.sharma@mospi.gov.in"
+                  value={empEmail}
+                  onChange={(e) => setEmpEmail(e.target.value)}
+                  className="eng-input w-full px-3 py-2 rounded-xl text-xs font-medium"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="font-bold block opacity-90">Designation</label>
+                  <select
+                    value={empDesignation}
+                    onChange={(e) => setEmpDesignation(e.target.value)}
+                    className="eng-input w-full px-3 py-2 rounded-xl text-xs font-semibold"
+                  >
+                    <option value="Junior Statistical Officer (JSO)" className="bg-slate-900">Junior Statistical Officer (JSO)</option>
+                    <option value="Senior Statistical Officer (SSO)" className="bg-slate-900">Senior Statistical Officer (SSO)</option>
+                    <option value="Senior System Analyst (SSA)" className="bg-slate-900">Senior System Analyst (SSA)</option>
+                    <option value="Assistant Director (AD)" className="bg-slate-900">Assistant Director (AD)</option>
+                    <option value="Deputy Director General (DDG)" className="bg-slate-900">Deputy Director General (DDG)</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-bold block opacity-90">Department / Division</label>
+                  <select
+                    value={empDepartment}
+                    onChange={(e) => setEmpDepartment(e.target.value)}
+                    className="eng-input w-full px-3 py-2 rounded-xl text-xs font-semibold"
+                  >
+                    <option value="Field Operations Division (FOD)" className="bg-slate-900">Field Operations Division (FOD)</option>
+                    <option value="National Accounts Division (NAD)" className="bg-slate-900">National Accounts Division (NAD)</option>
+                    <option value="Economic Statistics Division (ESD)" className="bg-slate-900">Economic Statistics Division (ESD)</option>
+                    <option value="Price Statistics Division (PSD)" className="bg-slate-900">Price Statistics Division (PSD)</option>
+                    <option value="Computer Centre & IT (CC)" className="bg-slate-900">Computer Centre & IT (CC)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold block opacity-90">Role Target Requirement Vector</label>
+                <select
+                  value={empRoleId}
+                  onChange={(e) => setEmpRoleId(e.target.value)}
+                  className="eng-input w-full px-3 py-2 rounded-xl text-xs font-semibold"
+                >
+                  {roles.map(r => (
+                    <option key={r.id} value={r.id} className="bg-slate-900">{r.title} ({r.department})</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold block opacity-90">Avatar Profile Photo URL</label>
+                <input
+                  type="url"
+                  placeholder="https://images.unsplash.com/..."
+                  value={empAvatarUrl}
+                  onChange={(e) => setEmpAvatarUrl(e.target.value)}
+                  className="eng-input w-full px-3 py-2 rounded-xl text-xs font-medium"
+                />
+              </div>
+
+              <div className="pt-2 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsAddEmployeeModalOpen(false)}
+                  className="px-4 py-2 rounded-xl eng-card opacity-70 hover:opacity-100 text-xs font-semibold cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
+                >
+                  Register Officer
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

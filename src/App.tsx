@@ -18,10 +18,27 @@ export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('mospi_auth') === 'true';
   });
+  const [personas, setPersonas] = useState<UserPersona[]>(MOCK_PERSONAS);
   const [currentPersona, setCurrentPersona] = useState<UserPersona>(MOCK_PERSONAS[0]); // Rajesh Kumar JSO
   const [currentRoleView, setCurrentRoleView] = useState<UserRole>('employee');
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [switchUserCandidate, setSwitchUserCandidate] = useState<UserPersona | null>(null);
+
+  const handleAddEmployee = (newPersona: UserPersona) => {
+    setPersonas(prev => [...prev, newPersona]);
+    setProfiles(prev => ({
+      ...prev,
+      [newPersona.id]: {
+        userId: newPersona.id,
+        roleId: newPersona.roleId,
+        scores: {
+          sk_descriptive_stats: { skillId: 'sk_descriptive_stats', level: 1, lastAssessedAt: new Date().toISOString().split('T')[0], assessedVia: 'self_assessment' },
+          sk_python_pandas: { skillId: 'sk_python_pandas', level: 1, lastAssessedAt: new Date().toISOString().split('T')[0], assessedVia: 'self_assessment' },
+          sk_data_gov: { skillId: 'sk_data_gov', level: 1, lastAssessedAt: new Date().toISOString().split('T')[0], assessedVia: 'self_assessment' }
+        }
+      }
+    }));
+  };
 
   useEffect(() => {
     document.body.classList.remove('dark', 'light');
@@ -180,6 +197,7 @@ export function App() {
         onLogin={handleLogin}
         theme={theme}
         onToggleTheme={toggleTheme}
+        personas={personas}
       />
     );
   }
@@ -204,6 +222,7 @@ export function App() {
         onToggleTheme={toggleTheme}
         onLogout={handleLogout}
         onNavigateHome={handleNavigateHome}
+        personas={personas}
       />
 
       {/* Main Container */}
@@ -244,6 +263,8 @@ export function App() {
           <AdminDashboard
             roles={roles}
             onUpdateRoleRequirement={handleUpdateRoleRequirement}
+            personas={personas}
+            onAddEmployee={handleAddEmployee}
           />
         )}
 

@@ -7,15 +7,18 @@ interface LoginPageProps {
   onLogin: (persona: UserPersona, role: UserRole) => void;
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
+  personas?: UserPersona[];
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTheme }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTheme, personas }) => {
   const [activeLoginRole, setActiveLoginRole] = useState<UserRole>('employee');
   const [email, setEmail] = useState('rajesh.kumar@mospi.gov.in');
   const [password, setPassword] = useState('••••••••••••');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  const personasList = personas || MOCK_PERSONAS;
 
   const handleRoleTabChange = (role: UserRole) => {
     setActiveLoginRole(role);
@@ -30,8 +33,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
     e.preventDefault();
     setIsLoading(true);
     setTimeout(() => {
-      const matchedPersona = MOCK_PERSONAS.find(p => p.email.toLowerCase() === email.toLowerCase()) ||
-                             (activeLoginRole === 'admin' ? MOCK_PERSONAS.find(p => p.userRole === 'admin') : MOCK_PERSONAS[0]);
+      const matchedPersona = personasList.find(p => p.email.toLowerCase() === email.toLowerCase()) ||
+                             (activeLoginRole === 'admin' ? personasList.find(p => p.userRole === 'admin') : personasList[0]);
       onLogin(matchedPersona!, activeLoginRole);
       setIsLoading(false);
     }, 450);
@@ -246,7 +249,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
           <div className="pt-1">
             <button
               type="button"
-              onClick={() => handleQuickPersonaLogin(MOCK_PERSONAS[0])}
+              onClick={() => handleQuickPersonaLogin(personasList[0])}
               className="w-full eng-card border border-indigo-500/30 hover:border-indigo-500 text-indigo-500 dark:text-indigo-400 font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />

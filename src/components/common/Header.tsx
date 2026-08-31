@@ -16,6 +16,7 @@ interface HeaderProps {
   onToggleTheme: () => void;
   onLogout?: () => void;
   onNavigateHome?: () => void;
+  personas?: UserPersona[];
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -30,9 +31,11 @@ export const Header: React.FC<HeaderProps> = ({
   theme,
   onToggleTheme,
   onLogout,
-  onNavigateHome
+  onNavigateHome,
+  personas
 }) => {
   const [showPersonaMenu, setShowPersonaMenu] = React.useState(false);
+  const personasList = personas || MOCK_PERSONAS;
 
   return (
     <header className="sticky top-0 z-50 eng-header px-4 lg:px-8 py-3 transition-colors duration-200">
@@ -179,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({
                   Switch Persona (Requires Auth)
                 </p>
                 <div className="space-y-1 pt-1">
-                  {MOCK_PERSONAS.map(persona => (
+                  {personasList.map(persona => (
                     <button
                       key={persona.id}
                       onClick={() => {
