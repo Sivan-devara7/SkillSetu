@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
                 iGOT Karmayogi API
               </span>
             </div>
-            <p className="text-[11px] opacity-70 font-medium">SIH Solution | Ministry of Statistics & Programme Implementation</p>
+            <p className="text-[11px] opacity-70 font-medium">Ministry of Statistics & Programme Implementation</p>
           </div>
         </a>
 

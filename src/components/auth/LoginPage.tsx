@@ -68,13 +68,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
             className="w-10 h-10 rounded-xl object-contain bg-white p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform"
           />
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="font-bold text-sm tracking-wide">SkillSetu</h2>
-              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
-                SIH 26101
-              </span>
-            </div>
-            <p className="text-[11px] opacity-70 font-medium">Ministry of Statistics & Programme Implementation — Official Prototype</p>
+            <h2 className="font-bold text-sm tracking-wide">SkillSetu</h2>
+            <p className="text-[11px] opacity-70 font-medium">Ministry of Statistics & Programme Implementation</p>
           </div>
         </a>
 
@@ -262,7 +257,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
 
       {/* Footer */}
       <footer className="text-center text-xs opacity-75 font-mono py-2 relative z-20">
-        SIH 2024 Hackathon Prototype | Ministry of Statistics & Programme Implementation (MoSPI)
+        SkillSetu | Ministry of Statistics & Programme Implementation (MoSPI)
       </footer>
 
     </div>

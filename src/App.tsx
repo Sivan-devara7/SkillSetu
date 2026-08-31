@@ -290,8 +290,8 @@ export function App() {
 
       {/* Footer */}
       <footer className="eng-header py-4 px-4 text-center text-xs mt-12 relative z-10 font-mono">
-        <p className="font-semibold">SIH Hackathon Prototype | Ministry of Statistics & Programme Implementation (MoSPI)</p>
-        <p className="text-[10px] opacity-70 mt-1">Problem Statement 26101 | Direct API Connection to iGOT Karmayogi (https://igotkarmayogi.gov.in/)</p>
+        <p className="font-semibold">SkillSetu | Ministry of Statistics & Programme Implementation (MoSPI)</p>
+        <p className="text-[10px] opacity-70 mt-1">Bridging Skills. Building Futures. | Powered by iGOT Karmayogi (https://igotkarmayogi.gov.in/)</p>
       </footer>
 
     </div>
