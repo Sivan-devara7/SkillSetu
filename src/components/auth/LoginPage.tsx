@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { UserPersona, UserRole } from '../../types';
 import { MOCK_PERSONAS } from '../../data/mockData';
-import { Shield, Lock, Mail, Eye, EyeOff, Zap, Sun, Moon, ArrowRight, UserCheck, Terminal, Award } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, Zap, Sun, Moon, ArrowRight, UserCheck, Terminal } from 'lucide-react';
 
 interface LoginPageProps {
   onLogin: (persona: UserPersona, role: UserRole) => void;
@@ -59,9 +59,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
           className="flex items-center gap-3 cursor-pointer group focus:outline-none select-none"
           title="SkillSetu | MoSPI Skill Intelligence"
         >
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:bg-indigo-500 transition-colors">
-            <Shield className="w-5 h-5" />
-          </div>
+          <img
+            src="/skillsetu.png"
+            alt="SkillSetu Logo"
+            className="w-10 h-10 rounded-xl object-contain bg-white p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform"
+          />
           <div>
             <div className="flex items-center gap-2">
               <h2 className="font-bold text-sm tracking-wide">SkillSetu</h2>
@@ -98,9 +100,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
           
           {/* Emblem & Portal Branding */}
           <div className="text-center space-y-2">
-            <div className="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-indigo-500/30">
-              <Award className="w-7 h-7" />
-            </div>
+            <img
+              src="/skillsetu.png"
+              alt="SkillSetu Logo"
+              className="w-16 h-16 rounded-2xl object-contain bg-white p-1 mx-auto shadow-lg shadow-indigo-500/30"
+            />
             <h1 className="text-xl font-bold tracking-tight">AI Skill Gap & iGOT Integration</h1>
             <p className="text-xs opacity-75 font-medium">
               National Statistical Systems Training Academy (NSSTA) Portal
