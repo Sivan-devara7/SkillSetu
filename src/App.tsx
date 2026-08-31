@@ -104,10 +104,9 @@ export function App() {
     else setActiveTab('overview');
   };
 
-  // Handler: Navigate Home / Learner Dashboard
+  // Handler: Redirect to Login Page
   const handleNavigateHome = () => {
-    setCurrentRoleView('employee');
-    setActiveTab('overview');
+    handleLogout();
   };
 
   // Handler: Skill Level Up (Triggered by Course Completion or AI Quiz Pass)

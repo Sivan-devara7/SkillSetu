@@ -43,15 +43,14 @@ export const Header: React.FC<HeaderProps> = ({
           href="/"
           onClick={(e) => {
             e.preventDefault();
-            if (onNavigateHome) {
+            if (onLogout) {
+              onLogout();
+            } else if (onNavigateHome) {
               onNavigateHome();
-            } else {
-              onToggleRoleView('employee');
-              onTabChange('overview');
             }
           }}
           className="flex items-center gap-3 cursor-pointer group focus:outline-none select-none"
-          title="SkillSetu | Home Dashboard"
+          title="SkillSetu | Redirect to Login Page"
         >
           <img
             src="/skillsetu.png"
