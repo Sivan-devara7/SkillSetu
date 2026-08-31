@@ -15,6 +15,7 @@ interface HeaderProps {
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
   onLogout?: () => void;
+  onNavigateHome?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -28,7 +29,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenIgotSync,
   theme,
   onToggleTheme,
-  onLogout
+  onLogout,
+  onNavigateHome
 }) => {
   const [showPersonaMenu, setShowPersonaMenu] = React.useState(false);
 
@@ -37,20 +39,33 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
         
         {/* Logo & Hackathon Team Title */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+        <a
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            if (onNavigateHome) {
+              onNavigateHome();
+            } else {
+              onToggleRoleView('employee');
+              onTabChange('overview');
+            }
+          }}
+          className="flex items-center gap-3 cursor-pointer group focus:outline-none select-none"
+          title="SkillSetu | Home Dashboard"
+        >
+          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:bg-indigo-500 transition-colors">
             <Shield className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-sm tracking-tight">MoSPI Skill Intelligence</span>
+              <span className="font-bold text-sm tracking-tight">SkillSetu</span>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
                 iGOT Karmayogi API
               </span>
             </div>
             <p className="text-[11px] opacity-70 font-medium">SIH Solution | Ministry of Statistics & Programme Implementation</p>
           </div>
-        </div>
+        </a>
 
         {/* Navigation Tabs */}
         <nav className="flex items-center gap-1 p-1 rounded-xl bg-slate-900/10 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">

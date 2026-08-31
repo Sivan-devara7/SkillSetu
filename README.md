@@ -1,4 +1,4 @@
-# MoSPI Competency Intelligence & iGOT Karmayogi Learning Platform 🚀
+# SkillSetu | MoSPI Skill Intelligence & iGOT Karmayogi Learning Platform 🚀
 ### Smart India Hackathon (SIH) Solution — Problem Statement 26101
 **Ministry of Statistics & Programme Implementation (MoSPI)**
 
@@ -58,7 +58,7 @@ This platform automates **competency assessment**, **role-based skill-gap analys
 1. **Clone the Repository**:
    ```bash
    git clone <YOUR_REPOSITORY_URL>
-   cd SmartEducaiton
+   cd SkillSetu
    ```
 
 2. **Install Dependencies**:
@@ -82,7 +82,7 @@ This platform automates **competency assessment**, **role-based skill-gap analys
 ## 📁 Repository Directory Structure
 
 ```
-SmartEducaiton/
+SkillSetu/
 ├── public/                 # Static assets & icons
 ├── src/
 │   ├── components/

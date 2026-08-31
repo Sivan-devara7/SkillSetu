@@ -53,20 +53,25 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
 
       {/* Top Header Controls */}
       <header className="flex items-center justify-between max-w-6xl w-full mx-auto relative z-20">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+        <a
+          href="/"
+          onClick={(e) => e.preventDefault()}
+          className="flex items-center gap-3 cursor-pointer group focus:outline-none select-none"
+          title="SkillSetu | MoSPI Skill Intelligence"
+        >
+          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:bg-indigo-500 transition-colors">
             <Shield className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="font-bold text-sm tracking-wide">MoSPI Competency Engine</h2>
+              <h2 className="font-bold text-sm tracking-wide">SkillSetu</h2>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
                 SIH 26101
               </span>
             </div>
             <p className="text-[11px] opacity-70 font-medium">Ministry of Statistics & Programme Implementation — Official Prototype</p>
           </div>
-        </div>
+        </a>
 
         <button
           onClick={onToggleTheme}

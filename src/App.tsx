@@ -104,6 +104,12 @@ export function App() {
     else setActiveTab('overview');
   };
 
+  // Handler: Navigate Home / Learner Dashboard
+  const handleNavigateHome = () => {
+    setCurrentRoleView('employee');
+    setActiveTab('overview');
+  };
+
   // Handler: Skill Level Up (Triggered by Course Completion or AI Quiz Pass)
   const handleSkillLevelUp = (skillId: string, customLevel?: SkillLevel) => {
     setProfiles(prev => {
@@ -198,6 +204,7 @@ export function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
         onLogout={handleLogout}
+        onNavigateHome={handleNavigateHome}
       />
 
       {/* Main Container */}
