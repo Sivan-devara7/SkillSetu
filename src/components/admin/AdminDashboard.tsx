@@ -98,10 +98,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">
               <Shield className="w-5 h-5 text-emerald-500" />
-              National Statistical Systems Training Academy (NSSTA) Governance
+              MoSPI Training & Skill Tracking (NSSTA)
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
-              Admin Analytics
+              Admin Panel
             </span>
           </div>
           <p className="text-xs opacity-75 mt-1 font-medium">
@@ -242,9 +242,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div>
               <h2 className="font-bold text-base flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-indigo-500" />
-                Role Requirement Vector Calibration
+                Role Skill Level Settings
               </h2>
-              <p className="text-xs opacity-70 font-medium">Define baseline target skill levels for official MoSPI job designations</p>
+              <p className="text-xs opacity-70 font-medium">Set the required skill levels for each MoSPI role designation</p>
             </div>
 
             <div className="flex items-center gap-3">
@@ -263,7 +263,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-sm cursor-pointer"
               >
                 <Save className="w-4 h-4" />
-                Save Requirement Vector
+                Save Changes
               </button>
             </div>
           </div>
@@ -271,7 +271,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {saveSuccessMsg && (
             <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 text-xs text-emerald-500 font-bold flex items-center gap-2 animate-pulse">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              Role requirement vector updated successfully! Skill gap analysis recalculated across officer database.
+              Role requirements saved successfully!
             </div>
           )}
 
@@ -318,7 +318,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {addEmpSuccessMsg && (
             <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 text-xs text-emerald-500 font-bold flex items-center gap-2 animate-pulse">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              New officer registered successfully! Profile & baseline skill gap matrix initialized.
+              New officer added successfully!
             </div>
           )}
 
@@ -428,7 +428,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div>
                 <h3 className="font-bold text-base">Add New MoSPI Officer</h3>
-                <p className="text-xs opacity-70">Register a new statistical officer to the competency intelligence database</p>
+                <p className="text-xs opacity-70">Add a new statistical officer to the employee database</p>
               </div>
             </div>
 
@@ -490,7 +490,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold block opacity-90">Role Target Requirement Vector</label>
+                <label className="font-bold block opacity-90">Target Role</label>
                 <select
                   value={empRoleId}
                   onChange={(e) => setEmpRoleId(e.target.value)}

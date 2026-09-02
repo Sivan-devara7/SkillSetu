@@ -64,7 +64,7 @@ export const CourseRecommendationsView: React.FC<CourseRecommendationsViewProps>
               iGOT Karmayogi Personalized Course Catalog
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-indigo-500/15 text-indigo-500 border border-indigo-500/30">
-              Direct iGOT Sync
+              Linked to iGOT Portal
             </span>
           </div>
           <p className="text-xs opacity-75 mt-1 font-medium">

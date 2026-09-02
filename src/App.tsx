@@ -126,7 +126,7 @@ export function App() {
     handleLogout();
   };
 
-  // Handler: Skill Level Up (Triggered by Course Completion or AI Quiz Pass)
+  // Handler: Skill Level Up (Triggered by Course Completion or Quiz Pass)
   const handleSkillLevelUp = (skillId: string, customLevel?: SkillLevel) => {
     setProfiles(prev => {
       const userProf = prev[currentPersona.id] || {

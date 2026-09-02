@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm tracking-tight">SkillSetu</span>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
-                iGOT Karmayogi API
+                MoSPI Training Portal
               </span>
             </div>
             <p className="text-[11px] opacity-70 font-medium">Ministry of Statistics & Programme Implementation</p>
@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <div className="flex items-center gap-1.5">
                   <Shield className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>AI Quiz Studio</span>
+                  <span>Quiz &amp; Assessment</span>
                 </div>
               </button>
             </>

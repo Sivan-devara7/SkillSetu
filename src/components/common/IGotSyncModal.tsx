@@ -29,10 +29,10 @@ export const IGotSyncModal: React.FC<IGotSyncModalProps> = ({
 
   const handleConnectAndSync = async () => {
     setIsSyncing(true);
-    setSyncStatusMsg('OAuth 2.0 handshake with iGOT Karmayogi (https://igotkarmayogi.gov.in/)...');
+    setSyncStatusMsg('Connecting to iGOT Karmayogi portal...');
     await new Promise(r => setTimeout(r, 600));
 
-    setSyncStatusMsg('Fetching course completion certificates & learning progress...');
+    setSyncStatusMsg('Fetching completed courses and progress data...');
     await new Promise(r => setTimeout(r, 700));
 
     const updatedConfig: IGotSyncConfig = {
@@ -163,7 +163,7 @@ export const IGotSyncModal: React.FC<IGotSyncModalProps> = ({
               rel="noopener noreferrer"
               className="text-[11px] opacity-70 hover:opacity-100 hover:text-indigo-500 underline font-medium"
             >
-              iGOT Karmayogi OIDC / OAuth2 Documentation
+              iGOT Karmayogi Portal (igotkarmayogi.gov.in)
             </a>
           </div>
         </div>

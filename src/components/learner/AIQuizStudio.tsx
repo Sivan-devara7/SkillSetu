@@ -4,7 +4,7 @@ import type { Quiz, QuizAttempt, SkillLevel } from '../../types';
 import { generateQuizFromDocument, evaluateQuizAttempt } from '../../services/aiQuizEngine';
 import { MOCK_SAMPLE_MANUALS } from '../../data/mockData';
 import { MOSPI_SKILLS } from '../../data/taxonomy';
-import { FileText, Upload, Sparkles, CheckCircle2, XCircle, Award, ArrowRight, RefreshCw, BrainCircuit } from 'lucide-react';
+import { FileText, Upload, CheckCircle2, XCircle, Award, ArrowRight, RefreshCw, BookOpen } from 'lucide-react';
 
 interface AIQuizStudioProps {
   userId: string;
@@ -29,14 +29,14 @@ export const AIQuizStudio: React.FC<AIQuizStudioProps> = ({ userId, apiKey, onSk
     setAttemptResult(null);
     setUserAnswers({});
 
-    // Perceived progress timeline
-    setGenerationStep('Chunking PDF document text & extracting vectors...');
+    // Loading steps
+    setGenerationStep('Reading selected document content...');
     await new Promise(r => setTimeout(r, 400));
 
-    setGenerationStep('Embedding text chunks & querying RAG index...');
+    setGenerationStep('Picking relevant topics from the manual...');
     await new Promise(r => setTimeout(r, 500));
 
-    setGenerationStep('LLM synthesizing 5 statistical assessment MCQs...');
+    setGenerationStep('Generating 5 multiple choice questions...');
     await new Promise(r => setTimeout(r, 450));
 
     const selectedDoc = MOCK_SAMPLE_MANUALS.find(d => d.id === selectedDocId);
@@ -76,15 +76,15 @@ export const AIQuizStudio: React.FC<AIQuizStudioProps> = ({ userId, apiKey, onSk
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">
-              <BrainCircuit className="w-5 h-5 text-indigo-500" />
-              AI Competency Assessment Studio
+              <BookOpen className="w-5 h-5 text-indigo-500" />
+              Competency Assessment Quiz
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
-              RAG + LLM Engine
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-indigo-500/15 text-indigo-500 border border-indigo-500/30">
+              Practice & Self-Test
             </span>
           </div>
           <p className="text-xs opacity-75 mt-1 font-medium">
-            Generate customized statistical assessment quizzes from official MoSPI manuals or uploaded PDF excerpts.
+            Generate practice quizzes based on official MoSPI manuals to test your knowledge on key topics.
           </p>
         </div>
       </div>
@@ -179,12 +179,12 @@ export const AIQuizStudio: React.FC<AIQuizStudioProps> = ({ userId, apiKey, onSk
               {isGenerating ? (
                 <>
                   <RefreshCw className="w-4 h-4 animate-spin text-white" />
-                  <span>Synthesizing MCQs...</span>
+                  <span>Generating Questions...</span>
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4 text-amber-300" />
-                  <span>Generate Assessment Quiz</span>
+                  <BookOpen className="w-4 h-4 text-white" />
+                  <span>Generate Quiz</span>
                 </>
               )}
             </button>
@@ -342,7 +342,7 @@ export const AIQuizStudio: React.FC<AIQuizStudioProps> = ({ userId, apiKey, onSk
                   onClick={() => setActiveQuiz(null)}
                   className="px-5 py-2.5 rounded-xl eng-btn-primary text-white font-bold text-xs cursor-pointer"
                 >
-                  Return to AI Studio
+                  Take Another Quiz
                 </button>
               </div>
 

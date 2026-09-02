@@ -103,9 +103,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
               alt="SkillSetu Logo"
               className="w-16 h-16 rounded-2xl object-contain bg-white p-1 mx-auto shadow-lg shadow-indigo-500/30"
             />
-            <h1 className="text-xl font-bold tracking-tight">AI Skill Gap & iGOT Integration</h1>
+            <h1 className="text-xl font-bold tracking-tight">SkillSetu — MoSPI Training Portal</h1>
             <p className="text-xs opacity-75 font-medium">
-              National Statistical Systems Training Academy (NSSTA) Portal
+              National Statistical Systems Training Academy (NSSTA)
             </p>
           </div>
 
@@ -248,7 +248,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, theme, onToggleTh
               className="w-full eng-card border border-indigo-500/30 hover:border-indigo-500 text-indigo-500 dark:text-indigo-400 font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
-              <span>Login with iGOT Karmayogi SSO</span>
+              <span>Login via iGOT Karmayogi Portal</span>
             </button>
           </div>
 

@@ -3,7 +3,7 @@ import type { CompetencyProfile, RoleRequirement, UserPersona } from '../../type
 import { computeSkillGaps, computeOverallReadiness, computeCategoryBreakdown } from '../../services/gapAnalysisEngine';
 
 import { SKILL_LEVEL_LABELS, CATEGORY_METADATA } from '../../data/taxonomy';
-import { Target, TrendingUp, AlertTriangle, CheckCircle2, Award, Zap, ArrowRight, BookOpen, BrainCircuit } from 'lucide-react';
+import { Target, TrendingUp, AlertTriangle, CheckCircle2, Award, Zap, ArrowRight, BookOpen, FileQuestion } from 'lucide-react';
 import {
   Radar,
   RadarChart,
@@ -223,8 +223,8 @@ export const SkillGapRadarView: React.FC<SkillGapRadarViewProps> = ({
               onClick={onNavigateToQuiz}
               className="px-4 eng-card hover:border-indigo-500/40 font-semibold text-xs py-3 rounded-xl transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <BrainCircuit className="w-4 h-4 text-indigo-500" />
-              <span>AI Quiz</span>
+              <FileQuestion className="w-4 h-4 text-indigo-500" />
+              <span>Take Quiz</span>
             </button>
           </div>
         </div>
